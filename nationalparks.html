@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/nationalparks.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>National Parks</title>
+</head>
+
+<body>
+    <header>
+        <nav class="nav nav-pills nav-fill w-50 mx-auto flex-column flex-sm-row mb-4">
+            <a class="nav-link " href="home.html">Home</a>
+            <a class="nav-link active" aria-current="page" href="nationalparks.html">National Parks</a>
+            <a class="nav-link" href="mountainsinfo.html">Mountain Information</a>
+        </nav>
+    </header>
+    <main class="container">
+        <h1 class="display-1">National Parks</h1>
+        <h2 class="display-4 text-center text-primary">Find parks</h2>
+        <div class="row">
+            <div class="col-sm-3 col-lg-4"></div>
+            <div class="col">
+                <div class="form-check">
+                    <input id="locationSearch" type="radio" class="form-check-input" name="searchParks" />
+                    <label for="locationSearch" class="form-check-label">By location</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-check ">
+                    <input id="parkSearch" type="radio" class="form-check-input" name="searchParks" />
+                    <label for="parkSearch" class="form-check-label">By Park type</label>
+                </div>
+            </div>
+            <div class="col-sm-3 col-lg-4"></div>
+        </div>
+
+        <select name="searchByLocation" id="searchLocation" class="form-control w-75 mx-auto mt-5">
+            <option value="" disabled selected>Location</option>
+        </select>
+        <select name="searchByParkType" id="searchParkType" class="form-control w-75 mx-auto mt-5">
+            <option value="" disabled selected>Park</option>
+        </select>
+    </main>
+    <script src="./scripts/nationalparks.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
