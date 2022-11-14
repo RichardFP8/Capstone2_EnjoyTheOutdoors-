@@ -1,4 +1,3 @@
-"use strict";
 const mountainsArray = [
     {
         name: "Mt. Washington",
@@ -528,62 +527,4 @@ const mountainsArray = [
             lng: -71.556745
         }
     }
-];
-const propertyNames = ["Name", "Elevation", "Effort", "Description"];
-window.onload = initial;
-
-function initial() {
-    // create options
-    loadMountains();
-    // get dropdown and assign an event handler to it
-    const mountainDropdown = document.getElementById("listOfMountains");
-    mountainDropdown.onchange = displaySelectedMountainDetails;
-    mountainDropdown.onclick = test;
-}
-// load options
-function loadMountains() {
-    const mountainDropdown = document.getElementById("listOfMountains");
-    for (let i in mountainsArray) {
-        let createOption = new Option(mountainsArray[i].name, mountainsArray[i].name.toLowerCase());
-        mountainDropdown.appendChild(createOption);
-    }
-}
-function displaySelectedMountainDetails() {
-    // get dropdown value and all elements that'll display info
-    // const selectedMountain = document.getElementById("listOfMountains").value;
-    const displayTable = document.getElementById("displayMountainDetails");
-    const getRows = document.querySelectorAll("tbody tr");
-    let displayImage = document.getElementById("displayMountainImage");
-    let index = 0;
-
-    // remove the previous table if any
-    Array.from(getRows).forEach(row => displayTable.removeChild(row));
-    // test each objects's property with the value to find ut
-    for (let i in mountainsArray) {
-        // once it's found loop through the properties and display any available info
-        if (mountainsArray[i].name.toLowerCase() === selectedMountain) {
-            for (let property in mountainsArray[i]) {
-                if (property === "img") {
-                    displayImage.scr = "./images/" + mountainsArray[i][property];
-                    console.log("./images/" + mountainsArray[i][property]);
-                    test.innerHTML = "./images/" + mountainsArray[i][property];
-                }
-                else if ((property !== "img") && (property !== "coords")) {
-                    let row = displayTable.insertRow(-1);
-                    let cellLabel = row.insertCell(0);
-                    let cellData = row.insertCell(1);
-                    cellLabel.innerHTML = propertyNames[index];
-                    cellData.innerHTML = mountainsArray[i][property];
-                    index++;
-                }
-            }
-        }
-    }
-}
-
-/*
-function test(){
-    const test = document.querySelector("#test");
-    test.innerHTML = "hello";
-}
-*/
+]
