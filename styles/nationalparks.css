@@ -1,3 +1,6 @@
 select[name] {
     display: none;
 }
+#containingTable{
+    display: none;
+}

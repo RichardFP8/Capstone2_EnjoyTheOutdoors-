@@ -6857,4 +6857,4 @@ const nationalParksArray = [
         type: "Point"
     }
     }
-]
+];
