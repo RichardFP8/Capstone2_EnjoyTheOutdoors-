@@ -33,21 +33,22 @@ function displaySelectedMountainDetails() {
         // once it's found loop through the properties and display any available info
         if (mountainsArray[i].name.toLowerCase() === selectedMountain) {
             for (let property in mountainsArray[i]) {
+                //exclude the image property from the table
                 if (property !== "img") {
                     let row = displayTable.insertRow(-1);
                     let cellLabel = row.insertCell(0);
                     let cellData = row.insertCell(1);
+                    //the coords property has an array; from it I'm creating the extra rows for sunset and sunrise times
                     if (property === "coords") {
-                        let times = ["Sunset", "Sunrise"];
                         cellLabel.innerHTML = "Coordinates";
-                        cellData.innerHTML = "Latitude: " + mountainsArray[i][property].lat + "&#09;Longitude: " + mountainsArray[i][property].lng;
+                        cellData.innerHTML = "Latitude: " + mountainsArray[i]["coords"].lat + " Longitude: " + mountainsArray[i]["coords"].lng;
 
                         //for sunrise
                         let sunriseRow = displayTable.insertRow(-1);
                         let sunriseCellLabel = sunriseRow.insertCell(0);
                         let sunriseCellData = sunriseRow.insertCell(1);
                         sunriseCellLabel.innerHTML = "Sunrise";
-                        getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunriseCellData.innerHTML = data.results.sunrise + "UTC" );
+                        getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunriseCellData.innerHTML = data.results.sunrise + "UTC");
                         //for sunset
                         let sunsetRow = displayTable.insertRow(-1);
                         let sunsetCellLabel = sunsetRow.insertCell(0);
@@ -56,12 +57,30 @@ function displaySelectedMountainDetails() {
                         getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunsetCellData.innerHTML = data.results.sunset + "UTC");
 
                     }
+                    //side project: based on the word, change the text-color
+                    else if (property === "effort") {
+                        //I need to make this AGAIN since the computer does what it's told. Meaning without the next two lines of code , the effort property won't render properly
+                        cellLabel.innerHTML = propertyNames[index];
+                        cellData.innerHTML = mountainsArray[i]["effort"];
+                        index++;
+                        if (mountainsArray[i]["effort"] === "Strenuous") {
+                            cellData.className = "text-warning";
+                        }
+                        else if (mountainsArray[i]["effort"] === "Moderate") {
+                            cellData.className = "text-secondary";
+                        }
+                        else {
+                            cellData.className = "text-info";
+                        }
+
+                    }
                     else {
                         cellLabel.innerHTML = propertyNames[index];
                         cellData.innerHTML = mountainsArray[i][property];
                         index++;
                     }
                 }
+                //outside the table, add the image and
                 else if (property === "img") {
                     image.src = "./images/" + mountainsArray[i].img;
                     image.alt = mountainsArray[i].name;
@@ -73,6 +92,8 @@ function displaySelectedMountainDetails() {
     }
 
 }
+
+
 async function getSunsetForMountain(lat, lng) {
     let response = await fetch(
         `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=today`);

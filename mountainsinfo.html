@@ -17,18 +17,32 @@
             <a class="nav-link" href="nationalparks.html">National Parks</a>
             <a class="nav-link active" aria-current="page" href="#">Mountain Information</a>
         </nav>
+    
+        <div aria-label="breadcrumb" class="d-flex justify-content-center mt-4" >
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="home.html">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Mountains Info</li>
+            </ol>
+        </div>
+
     </header>
-    <main>
-        <h1 class="display-1 m-3">Mountain Information</h1>
-        <h2 class="display-6 text-center">48 different kinds, choose any</h2>
-        <select name="mountainList" id="listOfMountains" class="form-control w-50 mx-auto">
-            <option value="" disabled selected>Select from 48!</option>
-        </select>
-        <table class="table table-striped w-50 mx-auto mt-5">
-            <tbody id="displayMountainDetails"></tbody>
-        </table>
-        <img id="displayMountainImage" class="d-block mx-auto" src="" alt=""/> 
-        <p id="test"></p>
+    <main class="container">
+        <div class="row">
+           
+            <div class="col">
+                <h1 class="display-1 m-3">Mountain Information</h1>
+                <h2 class="display-6 text-center">48 different kinds, choose any</h2>
+                <select name="mountainList" id="listOfMountains" class="form-control w-50 mx-auto">
+                    <option value="" disabled selected>Select from 48!</option>
+                </select>
+                <table class="table table-striped w-75 mx-auto mt-5">
+                    <tbody id="displayMountainDetails"></tbody>
+                </table>
+                <img id="displayMountainImage" class="d-block mx-auto" src="" alt="" />
+                <p id="test"></p>
+            </div>
+          
+        </div>
     </main>
     <script src="./scripts/mountainInfo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

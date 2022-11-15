@@ -26,4 +26,7 @@
 2. [Mountains Information Page](mountainsinfo.html) - Sunset/Sunrise times  
     I don't know the _fetch technique_ yet I still used it. The problem was that I couldn't find a way to call the _fetch method_, get the intended output only and repeat that with the other time. **I wanted to use a for loop** 
     **What did I do** I didn't fix it... Well, it's working fine _but_ is not how I originally wanted to code it. The solution was to create 2 rows, 4 cells, call the method twice separately, not in a loop. I don't know how the _.then()_ method works too.
+3. [Mountains Information Page](mountainsinfo.html) - Formatting Names  
+    I don't know exactly how to name the problem and that was the best I got. Anyways, I decided to add an if statement for when the for loop reaches the "effort" property. The problem was that, because of that if statement, the coordinates property wasn't rendered properly.  
+    **What did I do** Added an else before the if... Therefore _else if_ . I spent around 30 minutes trying to figure this out and thought it had to said here. 
 
