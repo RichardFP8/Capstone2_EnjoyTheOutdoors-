@@ -10,8 +10,12 @@ const nationalParksArray = [
     Fax: "(270) 358-3874",
     Latitude: 37.535671,
     Longitude: -85.7340637,
+    //an object's property
     Location: {
+        //this property contains another object
+        //two properties: an array and a string
         coordinates: [
+        //this property contains an array of two numbers/elements
         -85.7340637,
         37.535671
         ],

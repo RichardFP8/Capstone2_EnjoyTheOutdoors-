@@ -6934,6 +6934,7 @@ const parkTypesArray = [
 
 window.onload = initial;
 function initial() {
+    loadDropdowns();
     const locationButton = document.getElementById("locationSearch");
     const parkButton = document.getElementById("parkSearch");
     const viewAllButton = document.getElementById("viewAll");
@@ -6942,7 +6943,20 @@ function initial() {
     viewAllButton.onclick = showAllParks;
 
 }
-
+function loadDropdowns(){
+    const locationDropdown = document.getElementById("searchLocation");
+    const parkTypeDropdown = document.getElementById("searchParkType");
+    //for the location dropdown
+    for (let i in locationsArray) {
+        let option = new Option(locationsArray[i], locationsArray[i].toLowerCase());
+        locationDropdown.appendChild(option);
+    }
+    //for the park type dropdown
+    for (let i in parkTypesArray) {
+        let option = new Option(parkTypesArray[i], parkTypesArray[i].toLowerCase());
+        parkTypeDropdown.appendChild(option);
+    }
+}
 function displayLocationsDropdown() {
     const locationDropdown = document.getElementById("searchLocation");
     const parkTypeDropdown = document.getElementById("searchParkType");
@@ -6954,10 +6968,7 @@ function displayLocationsDropdown() {
     hideTable.style.display = "none";
     locationDropdown.selectedIndex = 0;
 
-    for (let i in locationsArray) {
-        let option = new Option(locationsArray[i], locationsArray[i].toLowerCase());
-        locationDropdown.appendChild(option);
-    }
+    
 
 }
 function displayParkTypesDropdown() {
@@ -6970,11 +6981,6 @@ function displayParkTypesDropdown() {
     hideTable.style.display = "none";
     parkTypeDropdown.style.display = "block";
     locationDropdown.style.display = "none";
-
-    for (let i in parkTypesArray) {
-        let option = new Option(parkTypesArray[i], parkTypesArray[i].toLowerCase());
-        parkTypeDropdown.appendChild(option);
-    }
 }
 function displayParksByLocation() {
     //getting all the elements and value I need
@@ -6996,8 +7002,12 @@ function displayParksByLocation() {
             for (let property in currentState) {
                 if (property !== "Visit") {
                     let cell = row.insertCell(cellIndex);
-                    if (property === "Location") { 
-                        
+                    if (property === "Location") {
+                        let anotherCell = row.insertCell(cellIndex + 1);
+                        let coordinate1 = currentState["Location"]["coordinates"][0];
+                        let coordinate2 = currentState["Location"]["coordinates"][1];
+                        cell.innerHTML = coordinate1 + "\n" + coordinate2;
+                        anotherCell.innerHTML = currentState["Location"]["type"];
                     }
                     else {
                         cell.innerHTML = currentState[property];
@@ -7020,11 +7030,6 @@ function displayParksByLocation() {
     }
 
 }
-
-
-
-
-
 function displayParksByType() {
     const selectedValue = document.getElementById("searchParkType").value;
     const displayTable = document.getElementById("containingTable");
@@ -7046,10 +7051,19 @@ function displayParksByType() {
                     let cellIndex = 0;
                     //create a new cell for each property, display all the parks per row
                     for (let property in currentPark) {
-                        if ((property !== "Location") && (property !== "Visit")) {
+                        if (property !== "Visit") {
                             let cell = row.insertCell(cellIndex);
-                            cell.innerHTML = currentPark[property];
-                            cellIndex++;
+                            if (property === "Location") {
+                                let anotherCell = row.insertCell(cellIndex + 1);
+                                let coordinate1 = currentPark["Location"]["coordinates"][0];
+                                let coordinate2 = currentPark["Location"]["coordinates"][1];
+                                cell.innerHTML = coordinate1 + "\n" + coordinate2;
+                                anotherCell.innerHTML = currentPark["Location"]["type"];
+                            }
+                            else {
+                                cell.innerHTML = currentPark[property];
+                                cellIndex++;
+                            }
                         }
                         else if (property === "Visit") {
                             let cell = row.insertCell(-1);
@@ -7094,10 +7108,19 @@ function showAllParks() {
         let row = getTableBody.insertRow(-1);
         let cellIndex = 0;
         for (let property in currentPark) {
-            if ((property !== "Location") && (property !== "Visit")) {
+            if (property !== "Visit") {
                 let cell = row.insertCell(cellIndex);
-                cell.innerHTML = currentPark[property];
-                cellIndex++;
+                if (property === "Location") {
+                    let anotherCell = row.insertCell(cellIndex + 1);
+                    let coordinate1 = currentPark["Location"]["coordinates"][0];
+                    let coordinate2 = currentPark["Location"]["coordinates"][1];
+                    cell.innerHTML = coordinate1 + "\n" + coordinate2;
+                    anotherCell.innerHTML = currentPark["Location"]["type"];
+                }
+                else {
+                    cell.innerHTML = currentPark[property];
+                    cellIndex++;
+                }
             }
             else if (property === "Visit") {
                 let cell = row.insertCell(-1);

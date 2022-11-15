@@ -25,10 +25,10 @@ function displaySelectedMountainDetails() {
     const image = document.getElementById("displayMountainImage");
     const test = document.getElementById("test");
     let index = 0;
-   
+
     // remove the previous table if any
     Array.from(getRows).forEach(row => displayTable.removeChild(row));
-    // test each objects's property with the value to find ut
+    // test each objects's property with the value to find it
     for (let i in mountainsArray) {
         // once it's found loop through the properties and display any available info
         if (mountainsArray[i].name.toLowerCase() === selectedMountain) {
@@ -39,17 +39,22 @@ function displaySelectedMountainDetails() {
                     let cellData = row.insertCell(1);
                     if (property === "coords") {
                         let times = ["Sunset", "Sunrise"];
-                        let index = 0;
-                        let mountainTimesArray = [ 
-                            getSunsetForMountain(mountainsArray[i][property].lat, mountainsArray[i][property].lng).then(data => test.innerHTML = data.results.sunset),
-                            getSunsetForMountain(mountainsArray[i][property].lat, mountainsArray[i][property].lng).then(data => test.innerHTML = data.results.sunries)
-                        ];
                         cellLabel.innerHTML = "Coordinates";
-                        cellData.innerHTML = `Latitude: ${mountainsArray[i][property].lat}\nLongitude: ${mountainsArray[i][property].lng}`;
-                        for(let x in mountainTimesArray){
-                            cellLabel.innerHTML = times[index];
-                            cellData.innerHTML = mountainTimesArray[x];
-                        }
+                        cellData.innerHTML = "Latitude: " + mountainsArray[i][property].lat + "&#09;Longitude: " + mountainsArray[i][property].lng;
+
+                        //for sunrise
+                        let sunriseRow = displayTable.insertRow(-1);
+                        let sunriseCellLabel = sunriseRow.insertCell(0);
+                        let sunriseCellData = sunriseRow.insertCell(1);
+                        sunriseCellLabel.innerHTML = "Sunrise";
+                        getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunriseCellData.innerHTML = data.results.sunrise + "UTC" );
+                        //for sunset
+                        let sunsetRow = displayTable.insertRow(-1);
+                        let sunsetCellLabel = sunsetRow.insertCell(0);
+                        let sunsetCellData = sunsetRow.insertCell(1);
+                        sunsetCellLabel.innerHTML = "Sunset";
+                        getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunsetCellData.innerHTML = data.results.sunset + "UTC");
+
                     }
                     else {
                         cellLabel.innerHTML = propertyNames[index];
@@ -66,7 +71,7 @@ function displaySelectedMountainDetails() {
             }
         }
     }
-   
+
 }
 async function getSunsetForMountain(lat, lng) {
     let response = await fetch(
@@ -74,7 +79,6 @@ async function getSunsetForMountain(lat, lng) {
     let data = await response.json();
     return data;
 }
-
 const propertyNames = ["Name", "Elevation", "Effort", "Description"];
 const mountainsArray = [
     {
