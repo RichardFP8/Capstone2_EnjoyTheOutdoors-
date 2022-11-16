@@ -18,11 +18,75 @@
             <a class="nav-link" href="mountainInfo.html">Mountains</a>
         </nav>
     </header>
-    <main>
+    <main class="container">
         <h1 class="display-1 text-end m-3">Hello</h1>
         <p class="text-end mx-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. In voluptatibus porro debitis,
             ratione modi architecto similique! Eaque error odit non debitis nam quos magni, commodi dolorem officia
             vitae distinctio enim.</p>
+        <h2 class="display-3 mb-1">Some mountains</h2>
+        <div id="homePageCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" class="active" data-bs-target="#homePageCarousel" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#homePageCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#homePageCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#homePageCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#homePageCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                <button type="button" data-bs-target="#homePageCarousel" data-bs-slide-to="5" aria-label="Slide 6"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="5000">
+                    <img class="d-block w-100" src="./images/Cabot-StoryImg.jpg" alt="Mountain Cabot"/>
+                    <div class="carousel-caption d-none d-md-block" >
+                        <h2 class="display-4">Mount Cabot</h2>
+                        <p>New Hampshire's North Country</p>
+                    </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="5000">
+                    <img class="d-block w-100" src="./images/Adams-StoryImage_2.jpg" alt=""/>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2 class="display-4">Mount Adams aka Pahto or Klickitat</h2>
+                        <p>Cascade Range, Washington State</p>
+                    </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="5000">
+                    <img class="d-block w-100" src="./images/SKinsman-StoryImage.jpg" alt=""/>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2 class="display-4">South Kinsman Mountain</h2>
+                        <p>Part of the Kinsman Range of the White Mountains in Grafton County, New Hamsphire</p>
+                    </div> 
+                </div>
+                <div class="carousel-item" data-bs-interval="5000">
+                    <img class="d-block w-100" src="./images/Eisenhower-StoryImage_2.jpg" alt=""/>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2 class="display-4">Mount Eisenhower (or Mt Pleasant)</h2>
+                        <p>Presidential range in the White Mountains of New Hamsphire</p>
+                    </div> 
+                </div>
+                <div class="carousel-item" data-bs-interval="5000">
+                    <img class="d-block w-100" src="./images/CDome-StoryImage.jpg" alt=""/>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2 class="display-4">Carter Dome aka The Dome</h2>
+                        <p>Coos County, New Hamsphire</p>
+                    </div> 
+                </div>
+                <div class="carousel-item" data-bs-interval="5000">
+                    <img class="d-block w-100" src="./images/Lafayette-StoryImage_2.jpg" alt=""/>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2 class="display-4">Mount Lafayette</h2>
+                        <p>Northern end of the Franconia Range in White Mountains of New Hamsphire</p>
+                    </div> 
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#homePageCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#homePageCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <small><i>Basically, just go to New Hamsphire if you want to climb some mountains</i></small>
         <h2 class="display-3 text-center">About us</h2>
         <p class="fw-bold text-center mx-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum atque
             accusamus quis officia, nesciunt sequi. Velit autem, ipsum, et dolore nihil nulla saepe labore tempora porro
@@ -31,16 +95,16 @@
         <div class="row">
             <div class="col-sm-4">
                 <h2 class="display-5 m-2 text-center">Locations</h2>
-                <ul class="d-flex flex-column ">
-                    <li>Lorem ipsum dolor sit amet.</li>
-                    <li>Lorem ipsum dolor sit amet.</li>
-                    <li>Lorem ipsum dolor sit amet.</li>
+                <ul class="d-flex flex-column align-items-center">
+                    <li>Lorem ipsum dolor sit amet Avenue</li>
+                    <li>Lorem ipsum dolor sit ameth Street</li>
+                    <li>Lorem ipsum dolor sit amet Boulevard</li>
                 </ul>
             </div>
             <div class="col-sm-4">
                 <h2 class="display-5 text-center">Leadership</h2>
-                <ol class="d-flex flex-column">
-                    <li>Lorem, ipsum dolor.</li>
+                <ol class="d-flex flex-column align-items-center">
+                    <li>Lorem, ipsum dolor</li>
                     <li>Lorem, ipsum dolor.</li>
                     <li>Lorem, ipsum dolor.</li>
                 </ol>
@@ -53,6 +117,37 @@
             </div>
         </div>
     </main>
+    <footer class="container-fluid ">
+        <div id="footer" class="row">
+            <div class="col-6 col-sm-3 gy-5">
+                <div class="col">
+                    <img id="brandLogo" class="w-75  " src="./images/Lafayette-StoryImage_2.jpg" alt="Mount Lafayette taking it one day at a time" >
+                </div>
+                <div class="row"></div>
+            </div>
+            <div class="col-6 col-sm-3">
+                <h2 class="display-6">What?</h2>
+                <div class="col-12">A link</div>
+                <div class="col-12">Another link</div>
+                <div class="col-12">One more link</div>
+            </div>
+            <div class="col-6 col-sm-3">
+                <h2 class="display-6">Why?</h2>
+                <div class="col-12">Hello</div>
+                <div class="col-12">Bye</div>
+                <div class="col-12">Hello again</div>
+            </div>
+            <div class="col-6 col-sm-3">
+                <h2 class="display-6">How?</h2>
+                <div class="col-12">IDK</div>
+                <div class="col-12">Still don't know</div>
+                <div class="col-12">I stay not knowing</div>
+            </div>
+        </div>
+        <div class="row">
+            <h2 class="display-5">&copy;Mine</h2>
+        </div>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>

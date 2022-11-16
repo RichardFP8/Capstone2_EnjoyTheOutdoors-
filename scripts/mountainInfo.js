@@ -1,274 +1,4 @@
 "use strict";
-window.onload = initial;
-
-function initial() {
-    // create options
-    loadMountains();
-    // get dropdown and assign an event handler to it
-    const mountainDropdown = document.getElementById("listOfMountains");
-    mountainDropdown.onchange = displaySelectedMountainDetails;
-}
-// load options
-function loadMountains() {
-    const mountainDropdown = document.getElementById("listOfMountains");
-    for (let i in mountainsArray) {
-        let createOption = new Option(mountainsArray[i].name, mountainsArray[i].name.toLowerCase());
-        mountainDropdown.appendChild(createOption);
-    }
-}
-function displaySelectedMountainDetails() {
-    //I'm going to append the card component before the last column
-    const childColumn = document.getElementById("theOtherChildColumn");
-    const parentRow = document.getElementById("parentRow");
-    //get the selected value from the dropdown
-    const selectedValue = document.getElementById("listOfMountains").value;
-    //before creating one, delete any before
-    const deleteCard = document.querySelector("#parentRow > div:not([id])");
-    //in the first run, the value is null since there was no card component already displayed
-    if (deleteCard !== null) {
-        parentRow.removeChild(deleteCard);
-    }
-    //create the elements required for the card component
-    const cardComponent = document.createElement("div");
-    const mountainImage = document.createElement("img");
-    const cardBody = document.createElement("div");
-    const cardTitle = document.createElement("h5");
-    const cardTable = document.createElement("table");
-    const cardText = document.createElement("p");
-    //set the attributes
-    cardComponent.classList.add("card");
-    cardComponent.classList.add("w-50");
-    mountainImage.classList.add("card-img-top");
-    cardBody.classList.add("card-body");
-    cardTitle.classList.add("card-title");
-    cardTitle.classList.add("text-center");
-    cardText.classList.add("card-text");
-    cardTable.classList.add("table");
-    cardTable.classList.add("table-striped");
-    //add the child hiearchy(?)
-    cardBody.appendChild(cardTitle);
-    cardBody.appendChild(cardTable);
-    cardBody.appendChild(cardText);
-    cardComponent.appendChild(mountainImage);
-    cardComponent.appendChild(cardBody);
-    parentRow.insertBefore(cardComponent, childColumn);
-    //go through each mountain object
-    for (let i in mountainsArray) {
-        let current = mountainsArray[i];
-        //compare each of name properties with the selected value 
-        if (current.name.toLowerCase() === selectedValue) {
-            //go through each of that mountain's objects properties
-            for (let property in current) {
-                if (property === "name") {
-                    cardTitle.innerHTML = current["name"];
-                }
-                else if (property === "effort") {
-                    let effortRow = cardTable.insertRow(-1);
-                    let cellLabel = effortRow.insertCell(0);
-                    let cellData = effortRow.insertCell(1);
-                    cellLabel.innerHTML = "Effort";
-                    cellData.innerHTML = current["effort"];
-                    if (current["effort"] === "Strenuous") {
-                        cellData.className = "text-warning";
-                    }
-                    else if (current["effort"] === "Moderate") {
-                        cellData.className = "text-secondary";
-                    }
-                    else {
-                        cellData.className = "text-info";
-                    }
-                }
-                else if (property === "coords") {
-                    const axisArray = ["Latitude", "Longitude"];
-                    let x = 0;
-                    for (let index in current['coords']) {
-                        let row = cardTable.insertRow(-1);
-                        let cellLabel = row.insertCell(0);
-                        let cellData = row.insertCell(1);
-                        cellLabel.innerHTML = axisArray[x];
-                        cellData.innerHTML = current["coords"][index];
-                        x++;
-                    }
-                    //for sunrise
-                    let sunriseRow = cardTable.insertRow(-1);
-                    let sunriseCellLabel = sunriseRow.insertCell(0);
-                    let sunriseCellData = sunriseRow.insertCell(1);
-                    sunriseCellLabel.innerHTML = "Sunrise";
-                    getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunriseCellData.innerHTML = data.results.sunrise + "UTC");
-                    //for sunset
-                    let sunsetRow = cardTable.insertRow(-1);
-                    let sunsetCellLabel = sunsetRow.insertCell(0);
-                    let sunsetCellData = sunsetRow.insertCell(1);
-                    sunsetCellLabel.innerHTML = "Sunset";
-                    getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunsetCellData.innerHTML = data.results.sunset + "UTC");
-
-                }
-                else if (property === "img") {
-                    mountainImage.src = "./images/" + current["img"];
-                    mountainImage.alt = current["name"];
-                }
-                else if (property === "desc") {
-                    cardText.innerHTML = current["desc"];
-                }
-            }
-        }
-    }
-}
-async function getSunsetForMountain(lat, lng) {
-    let response = await fetch(
-        `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=today`);
-    let data = await response.json();
-    return data;
-}
-
-/*
-for (let i in mountainsArray) {
-        // once it's found loop through the properties and display any available info
-        if (mountainsArray[i].name.toLowerCase() === selectedMountain) {
-            for (let property in mountainsArray[i]) {
-                //exclude the image property from the table
-                if (property !== "img") {
-                    let row = displayTable.insertRow(-1);
-                    let cellLabel = row.insertCell(0);
-                    let cellData = row.insertCell(1);
-                    //the coords property has an array; from it I'm creating the extra rows for sunset and sunrise times
-                    if (property === "coords") {
-                        cellLabel.innerHTML = "Coordinates";
-                        cellData.innerHTML = "Latitude: " + mountainsArray[i]["coords"].lat + " Longitude: " + mountainsArray[i]["coords"].lng;
-
-                        //for sunrise
-                        let sunriseRow = displayTable.insertRow(-1);
-                        let sunriseCellLabel = sunriseRow.insertCell(0);
-                        let sunriseCellData = sunriseRow.insertCell(1);
-                        sunriseCellLabel.innerHTML = "Sunrise";
-                        getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunriseCellData.innerHTML = data.results.sunrise + "UTC");
-                        //for sunset
-                        let sunsetRow = displayTable.insertRow(-1);
-                        let sunsetCellLabel = sunsetRow.insertCell(0);
-                        let sunsetCellData = sunsetRow.insertCell(1);
-                        sunsetCellLabel.innerHTML = "Sunset";
-                        getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunsetCellData.innerHTML = data.results.sunset + "UTC");
-
-                    }
-                    //side project: based on the word, change the text-color
-                    else if (property === "effort") {
-                        //I need to make this AGAIN since the computer does what it's told. Meaning without the next two lines of code , the effort property won't render properly
-                        cellLabel.innerHTML = propertyNames[index];
-                        cellData.innerHTML = mountainsArray[i]["effort"];
-                        index++;
-                        if (mountainsArray[i]["effort"] === "Strenuous") {
-                            cellData.className = "text-warning";
-                        }
-                        else if (mountainsArray[i]["effort"] === "Moderate") {
-                            cellData.className = "text-secondary";
-                        }
-                        else {
-                            cellData.className = "text-info";
-                        }
-
-                    }
-                    else {
-                        cellLabel.innerHTML = propertyNames[index];
-                        cellData.innerHTML = mountainsArray[i][property];
-                        index++;
-                    }
-                }
-                //outside the table, add the image and
-                else if (property === "img") {
-                    image.src = "./images/" + mountainsArray[i].img;
-                    image.alt = mountainsArray[i].name;
-                    image.className = "d-block mx-auto ";
-                    image.style.borderRadius = "1rem";
-                }
-            }
-        }
-    }
- */
-/**
-async function getSunsetForMountain(lat, lng) {
-    let response = await fetch(
-        `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=today`);
-    let data = await response.json();
-    return data;
-}
- */
-/**
- function displaySelectedMountainDetails() {
-    // get dropdown value and all elements that'll display info
-    const selectedMountain = document.getElementById("listOfMountains").value;
-    const displayTable = document.getElementById("displayMountainDetails");
-    const getRows = document.querySelectorAll("tbody tr");
-    const image = document.getElementById("displayMountainImage");
-    const test = document.getElementById("test");
-    let index = 0;
-
-    // remove the previous table if any
-    Array.from(getRows).forEach(row => displayTable.removeChild(row));
-    // test each objects's property with the value to find it
-    for (let i in mountainsArray) {
-        // once it's found loop through the properties and display any available info
-        if (mountainsArray[i].name.toLowerCase() === selectedMountain) {
-            for (let property in mountainsArray[i]) {
-                //exclude the image property from the table
-                if (property !== "img") {
-                    let row = displayTable.insertRow(-1);
-                    let cellLabel = row.insertCell(0);
-                    let cellData = row.insertCell(1);
-                    //the coords property has an array; from it I'm creating the extra rows for sunset and sunrise times
-                    if (property === "coords") {
-                        cellLabel.innerHTML = "Coordinates";
-                        cellData.innerHTML = "Latitude: " + mountainsArray[i]["coords"].lat + " Longitude: " + mountainsArray[i]["coords"].lng;
-
-                        //for sunrise
-                        let sunriseRow = displayTable.insertRow(-1);
-                        let sunriseCellLabel = sunriseRow.insertCell(0);
-                        let sunriseCellData = sunriseRow.insertCell(1);
-                        sunriseCellLabel.innerHTML = "Sunrise";
-                        getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunriseCellData.innerHTML = data.results.sunrise + "UTC");
-                        //for sunset
-                        let sunsetRow = displayTable.insertRow(-1);
-                        let sunsetCellLabel = sunsetRow.insertCell(0);
-                        let sunsetCellData = sunsetRow.insertCell(1);
-                        sunsetCellLabel.innerHTML = "Sunset";
-                        getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunsetCellData.innerHTML = data.results.sunset + "UTC");
-
-                    }
-                    //side project: based on the word, change the text-color
-                    else if (property === "effort") {
-                        //I need to make this AGAIN since the computer does what it's told. Meaning without the next two lines of code , the effort property won't render properly
-                        cellLabel.innerHTML = propertyNames[index];
-                        cellData.innerHTML = mountainsArray[i]["effort"];
-                        index++;
-                        if (mountainsArray[i]["effort"] === "Strenuous") {
-                            cellData.className = "text-warning";
-                        }
-                        else if (mountainsArray[i]["effort"] === "Moderate") {
-                            cellData.className = "text-secondary";
-                        }
-                        else {
-                            cellData.className = "text-info";
-                        }
-
-                    }
-                    else {
-                        cellLabel.innerHTML = propertyNames[index];
-                        cellData.innerHTML = mountainsArray[i][property];
-                        index++;
-                    }
-                }
-                //outside the table, add the image and
-                else if (property === "img") {
-                    image.src = "./images/" + mountainsArray[i].img;
-                    image.alt = mountainsArray[i].name;
-                    image.className = "d-block mx-auto ";
-                    image.style.borderRadius = "1rem";
-                }
-            }
-        }
-    }
-
-}
- */
 const mountainsArray = [
     {
         name: "Mt. Washington",
@@ -799,3 +529,280 @@ const mountainsArray = [
         }
     }
 ];
+
+window.onload = initial;
+
+function initial() {
+    // create options
+    loadMountains();
+    // get dropdown and assign an event handler to it
+    const mountainDropdown = document.getElementById("listOfMountains");
+    mountainDropdown.onchange = displaySelectedMountainDetails;
+}
+// load options
+function loadMountains() {
+    const mountainDropdown = document.getElementById("listOfMountains");
+    const sortedArray = mountainsArray.sort((x, y) => {
+        if( x.name < y.name) return -1;
+        else if(x.name === y.name) return 0;
+        else return 1;
+    } );
+    for (let i in sortedArray) {
+        let createOption = new Option(sortedArray[i].name, sortedArray[i].name.toLowerCase());
+        mountainDropdown.appendChild(createOption);
+    }
+}
+function displaySelectedMountainDetails() {
+    //I'm going to append the card component before the last column
+    const childColumn = document.getElementById("theOtherChildColumn");
+    const parentRow = document.getElementById("parentRow");
+    //get the selected value from the dropdown
+    const selectedValue = document.getElementById("listOfMountains").value;
+    //before creating one, delete any before
+    const deleteCard = document.querySelector("#parentRow > div:not([id])");
+    //in the first run, the value is null since there was no card component already displayed
+    if (deleteCard !== null) {
+        parentRow.removeChild(deleteCard);
+    }
+    //create the elements required for the card component
+    const cardComponent = document.createElement("div");
+    const mountainImage = document.createElement("img");
+    const cardBody = document.createElement("div");
+    const cardTitle = document.createElement("h5");
+    const cardTable = document.createElement("table");
+    const cardText = document.createElement("p");
+    //set the attributes
+    cardComponent.classList.add("card");
+    cardComponent.classList.add("w-50");
+    cardComponent.classList.add("mt-5");
+    mountainImage.classList.add("card-img-top");
+    cardBody.classList.add("card-body");
+    cardTitle.classList.add("card-title");
+    cardTitle.classList.add("text-center");
+    cardText.classList.add("card-text");
+    cardTable.classList.add("table");
+    cardTable.classList.add("table-striped");
+    //add the child hiearchy(?)
+    cardBody.appendChild(cardTitle);
+    cardBody.appendChild(cardTable);
+    cardBody.appendChild(cardText);
+    cardComponent.appendChild(mountainImage);
+    cardComponent.appendChild(cardBody);
+    parentRow.insertBefore(cardComponent, childColumn);
+    //go through each mountain object
+    for (let i in mountainsArray) {
+        let current = mountainsArray[i];
+        //compare each of name properties with the selected value 
+        if (current.name.toLowerCase() === selectedValue) {
+            //go through each of that mountain's objects properties
+            for (let property in current) {
+                if (property === "name") {
+                    cardTitle.innerHTML = current["name"];
+                }
+                else if (property === "effort") {
+                    let effortRow = cardTable.insertRow(-1);
+                    let cellLabel = effortRow.insertCell(0);
+                    let cellData = effortRow.insertCell(1);
+                    cellLabel.innerHTML = "Effort";
+                    cellData.innerHTML = current["effort"];
+                    if (current["effort"] === "Strenuous") {
+                        cellData.className = "text-warning";
+                    }
+                    else if (current["effort"] === "Moderate") {
+                        cellData.className = "text-secondary";
+                    }
+                    else {
+                        cellData.className = "text-info";
+                    }
+                }
+                else if (property === "coords") {
+                    const axisArray = ["Latitude", "Longitude"];
+                    let x = 0;
+                    for (let index in current['coords']) {
+                        let row = cardTable.insertRow(-1);
+                        let cellLabel = row.insertCell(0);
+                        let cellData = row.insertCell(1);
+                        cellLabel.innerHTML = axisArray[x];
+                        cellData.innerHTML = current["coords"][index];
+                        x++;
+                    }
+                    //for sunrise
+                    let sunriseRow = cardTable.insertRow(-1);
+                    let sunriseCellLabel = sunriseRow.insertCell(0);
+                    let sunriseCellData = sunriseRow.insertCell(1);
+                    sunriseCellLabel.innerHTML = "Sunrise";
+                    getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunriseCellData.innerHTML = data.results.sunrise + "UTC");
+                    //for sunset
+                    let sunsetRow = cardTable.insertRow(-1);
+                    let sunsetCellLabel = sunsetRow.insertCell(0);
+                    let sunsetCellData = sunsetRow.insertCell(1);
+                    sunsetCellLabel.innerHTML = "Sunset";
+                    getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunsetCellData.innerHTML = data.results.sunset + "UTC");
+
+                }
+                else if (property === "img") {
+                    mountainImage.src = "./images/" + current["img"];
+                    mountainImage.alt = current["name"];
+                }
+                else if (property === "desc") {
+                    cardText.innerHTML = current["desc"];
+                }
+            }
+        }
+    }
+}
+async function getSunsetForMountain(lat, lng) {
+    let response = await fetch(
+        `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=today`);
+    let data = await response.json();
+    return data;
+}
+
+/*
+for (let i in mountainsArray) {
+        // once it's found loop through the properties and display any available info
+        if (mountainsArray[i].name.toLowerCase() === selectedMountain) {
+            for (let property in mountainsArray[i]) {
+                //exclude the image property from the table
+                if (property !== "img") {
+                    let row = displayTable.insertRow(-1);
+                    let cellLabel = row.insertCell(0);
+                    let cellData = row.insertCell(1);
+                    //the coords property has an array; from it I'm creating the extra rows for sunset and sunrise times
+                    if (property === "coords") {
+                        cellLabel.innerHTML = "Coordinates";
+                        cellData.innerHTML = "Latitude: " + mountainsArray[i]["coords"].lat + " Longitude: " + mountainsArray[i]["coords"].lng;
+
+                        //for sunrise
+                        let sunriseRow = displayTable.insertRow(-1);
+                        let sunriseCellLabel = sunriseRow.insertCell(0);
+                        let sunriseCellData = sunriseRow.insertCell(1);
+                        sunriseCellLabel.innerHTML = "Sunrise";
+                        getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunriseCellData.innerHTML = data.results.sunrise + "UTC");
+                        //for sunset
+                        let sunsetRow = displayTable.insertRow(-1);
+                        let sunsetCellLabel = sunsetRow.insertCell(0);
+                        let sunsetCellData = sunsetRow.insertCell(1);
+                        sunsetCellLabel.innerHTML = "Sunset";
+                        getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunsetCellData.innerHTML = data.results.sunset + "UTC");
+
+                    }
+                    //side project: based on the word, change the text-color
+                    else if (property === "effort") {
+                        //I need to make this AGAIN since the computer does what it's told. Meaning without the next two lines of code , the effort property won't render properly
+                        cellLabel.innerHTML = propertyNames[index];
+                        cellData.innerHTML = mountainsArray[i]["effort"];
+                        index++;
+                        if (mountainsArray[i]["effort"] === "Strenuous") {
+                            cellData.className = "text-warning";
+                        }
+                        else if (mountainsArray[i]["effort"] === "Moderate") {
+                            cellData.className = "text-secondary";
+                        }
+                        else {
+                            cellData.className = "text-info";
+                        }
+
+                    }
+                    else {
+                        cellLabel.innerHTML = propertyNames[index];
+                        cellData.innerHTML = mountainsArray[i][property];
+                        index++;
+                    }
+                }
+                //outside the table, add the image and
+                else if (property === "img") {
+                    image.src = "./images/" + mountainsArray[i].img;
+                    image.alt = mountainsArray[i].name;
+                    image.className = "d-block mx-auto ";
+                    image.style.borderRadius = "1rem";
+                }
+            }
+        }
+    }
+ */
+/**
+async function getSunsetForMountain(lat, lng) {
+    let response = await fetch(
+        `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=today`);
+    let data = await response.json();
+    return data;
+}
+ */
+/**
+ function displaySelectedMountainDetails() {
+    // get dropdown value and all elements that'll display info
+    const selectedMountain = document.getElementById("listOfMountains").value;
+    const displayTable = document.getElementById("displayMountainDetails");
+    const getRows = document.querySelectorAll("tbody tr");
+    const image = document.getElementById("displayMountainImage");
+    const test = document.getElementById("test");
+    let index = 0;
+
+    // remove the previous table if any
+    Array.from(getRows).forEach(row => displayTable.removeChild(row));
+    // test each objects's property with the value to find it
+    for (let i in mountainsArray) {
+        // once it's found loop through the properties and display any available info
+        if (mountainsArray[i].name.toLowerCase() === selectedMountain) {
+            for (let property in mountainsArray[i]) {
+                //exclude the image property from the table
+                if (property !== "img") {
+                    let row = displayTable.insertRow(-1);
+                    let cellLabel = row.insertCell(0);
+                    let cellData = row.insertCell(1);
+                    //the coords property has an array; from it I'm creating the extra rows for sunset and sunrise times
+                    if (property === "coords") {
+                        cellLabel.innerHTML = "Coordinates";
+                        cellData.innerHTML = "Latitude: " + mountainsArray[i]["coords"].lat + " Longitude: " + mountainsArray[i]["coords"].lng;
+
+                        //for sunrise
+                        let sunriseRow = displayTable.insertRow(-1);
+                        let sunriseCellLabel = sunriseRow.insertCell(0);
+                        let sunriseCellData = sunriseRow.insertCell(1);
+                        sunriseCellLabel.innerHTML = "Sunrise";
+                        getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunriseCellData.innerHTML = data.results.sunrise + "UTC");
+                        //for sunset
+                        let sunsetRow = displayTable.insertRow(-1);
+                        let sunsetCellLabel = sunsetRow.insertCell(0);
+                        let sunsetCellData = sunsetRow.insertCell(1);
+                        sunsetCellLabel.innerHTML = "Sunset";
+                        getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunsetCellData.innerHTML = data.results.sunset + "UTC");
+
+                    }
+                    //side project: based on the word, change the text-color
+                    else if (property === "effort") {
+                        //I need to make this AGAIN since the computer does what it's told. Meaning without the next two lines of code , the effort property won't render properly
+                        cellLabel.innerHTML = propertyNames[index];
+                        cellData.innerHTML = mountainsArray[i]["effort"];
+                        index++;
+                        if (mountainsArray[i]["effort"] === "Strenuous") {
+                            cellData.className = "text-warning";
+                        }
+                        else if (mountainsArray[i]["effort"] === "Moderate") {
+                            cellData.className = "text-secondary";
+                        }
+                        else {
+                            cellData.className = "text-info";
+                        }
+
+                    }
+                    else {
+                        cellLabel.innerHTML = propertyNames[index];
+                        cellData.innerHTML = mountainsArray[i][property];
+                        index++;
+                    }
+                }
+                //outside the table, add the image and
+                else if (property === "img") {
+                    image.src = "./images/" + mountainsArray[i].img;
+                    image.alt = mountainsArray[i].name;
+                    image.className = "d-block mx-auto ";
+                    image.style.borderRadius = "1rem";
+                }
+            }
+        }
+    }
+
+}
+ */

@@ -4,3 +4,23 @@ select[name] {
 #containingTable{
     display: none;
 }
+#mainBody{
+    height: 60vh;
+    margin-bottom: 25rem;
+}
+#brandLogo{
+    border-radius: 55%;
+    margin: auto 0;
+}
+#footer{
+    border-top: 1px solid #000;
+    padding-top: 1rem;   
+    row-gap: 1rem;
+}
+#extraData{
+    margin: 1rem 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}

@@ -6943,7 +6943,7 @@ function initial() {
     viewAllButton.onclick = showAllParks;
 
 }
-function loadDropdowns(){
+function loadDropdowns() {
     const locationDropdown = document.getElementById("searchLocation");
     const parkTypeDropdown = document.getElementById("searchParkType");
     //for the location dropdown
@@ -6961,6 +6961,8 @@ function displayLocationsDropdown() {
     const locationDropdown = document.getElementById("searchLocation");
     const parkTypeDropdown = document.getElementById("searchParkType");
     const hideTable = document.getElementById("containingTable");
+    const extraData = document.getElementById("extraData");
+    extraData.innerHTML = "";
 
     locationDropdown.onchange = displayParksByLocation;
     locationDropdown.style.display = "block";
@@ -6968,13 +6970,15 @@ function displayLocationsDropdown() {
     hideTable.style.display = "none";
     locationDropdown.selectedIndex = 0;
 
-    
+
 
 }
 function displayParkTypesDropdown() {
     const parkTypeDropdown = document.getElementById("searchParkType");
     const locationDropdown = document.getElementById("searchLocation");
     const hideTable = document.getElementById("containingTable");
+    const extraData = document.getElementById("extraData");
+    extraData.innerHTML = "";
 
     parkTypeDropdown.onchange = displayParksByType;
     parkTypeDropdown.selectedIndex = 0;
@@ -6988,14 +6992,16 @@ function displayParksByLocation() {
     const getTableBody = document.getElementById("displayParkInfo");
     const displayTable = document.getElementById("containingTable");
     const getRows = document.querySelectorAll("#displayParkInfo tr");
-
+    const extraData = document.getElementById("extraData");
+    const beforeCompute = new Date();
     displayTable.style.display = "block";
     Array.from(getRows).forEach(row => getTableBody.removeChild(row));
-
+    let wholeState;
     //first go through each state property and find the match
     for (let i in nationalParksArray) {
         let currentState = nationalParksArray[i]; //why not
         if (currentState["State"].toLowerCase() === stateSelected) {
+            wholeState = currentState["State"];
             let row = getTableBody.insertRow(-1);
             let cellIndex = 0;
             //create a new cell for each property, display all the parks per row
@@ -7023,21 +7029,23 @@ function displayParksByLocation() {
                     cell.innerHTML = "For more information, visit\n";
                     cell.appendChild(link);
                 }
-
-
             }
         }
     }
-
+    const afterCompute = new Date();
+    const millieSecsComputing = afterCompute.getTime() - beforeCompute.getTime() ;
+    extraData.innerHTML = "It took " + millieSecsComputing + " millieseconds to find the parks located in " + wholeState;
 }
 function displayParksByType() {
     const selectedValue = document.getElementById("searchParkType").value;
     const displayTable = document.getElementById("containingTable");
     const getTableBody = document.getElementById("displayParkInfo");
     const getRows = document.querySelectorAll("#displayParkInfo tr");
-    const test = document.getElementById("test");
+    const extraData = document.getElementById("extraData");
+    const beforeCompute = new Date();
+    
     let splitSelectedValue = selectedValue.split(" ");             //I converted the selected value into an array
-
+    let totalParks = 0;
     displayTable.style.display = "block";
     Array.from(getRows).forEach(x => getTableBody.removeChild(x));
 
@@ -7076,6 +7084,7 @@ function displayParksByType() {
                         }
 
                     }
+                    totalParks++;
                     break;
                 }
             }
@@ -7084,10 +7093,9 @@ function displayParksByType() {
 
     }
 
-    // let test = nationalParksArray[0].LocationName.split(" ");
-    // for(let b in test){
-    //     console.log(test[b]);
-    // }
+    const afterCompute = new Date();
+    const millieSecsComputing = afterCompute.getTime() - beforeCompute.getTime() ;
+    extraData.innerHTML = totalParks + " parks matched the description!" + " It took " + millieSecsComputing + " millieseconds to find all" ;
 }
 function showAllParks() {
     const parkTypeDropdown = document.getElementById("searchParkType");
@@ -7095,6 +7103,8 @@ function showAllParks() {
     const displayTable = document.getElementById("containingTable");
     const getTableBody = document.getElementById("displayParkInfo");
     const getRows = document.querySelectorAll("#displayParkInfo tr");
+    const extraData = document.getElementById("extraData");
+    const beforeCompute = new Date();
 
     Array.from(getRows).forEach(x => getTableBody.removeChild(x));
     parkTypeDropdown.selectedIndex = 0;
@@ -7134,4 +7144,7 @@ function showAllParks() {
 
         }
     }
+    const afterCompute = new Date();
+    const millieSecsComputing = afterCompute.getTime() - beforeCompute.getTime() ;
+    extraData.innerHTML = "It took " + millieSecsComputing + " millieseconds to show parks";
 }
