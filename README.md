@@ -30,7 +30,15 @@
 3. [Mountains Information Page](mountainsinfo.html) - Formatting Names  
     I don't know exactly how to name the problem and that was the best I got. Anyways, I decided to add an if statement for when the for loop reaches the "effort" property. The problem was that, because of that if statement, the coordinates property wasn't rendered properly.  
     **What did I do** Added an else before the if... Therefore _else if_ . I spent around 30 minutes trying to figure this out and thought it had to said here. 
+4. [National Parks Page](nationalparks.html) - Converting to accordion components  
+    There were many problems I've faced within the day I took to do this. But nothing crazy. I'll just list them:  
+    * How to make insert data-bs-toggle/target attributes to the programmatically created elements
+    *  How to layout the details of the park inside that accordion item
+    * How to shorten the amount of steps to add the details inside the accordion items(_now that I think of it, I haven't solved this one..._)
 ### UPDATES _(any changes)_
 1. 11/15/2022: [Mountains Information Page](mountainsinfo.html)  
     **Previously** a table would render once the user clicked an option and the image would appear at the bottom of that table  
     **Now** I changed how the details of the mountain would be shown; I used the Bootstrap card component to do that. I created the elements programmatically, had a conditional for each of the mountain objects so that I controlled the layout
+2. 11/17/2022: [National Parks Page](nationalparks.html)  
+    **Previously** a table would display once an option is clicked. Each park would show up per row, and it's details were placed in each column, that row  
+    **Now** I used the accordion component. Each park is now an accordion item and there is more _**CLICKING for the user!**_. You think they're tired of too much clicking? Anyways, I also added a bit of extra information(_inspiration from Google_) that justs tells how long it took the computer to find all. I added a responsive table inside each accordion items. The name property is the heading of that accordion item
