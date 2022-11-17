@@ -1,29 +1,42 @@
 body{
-    background: linear-gradient(90deg, rgba(123, 224, 32, 50%), rgba(34,  57, 89, 0.86));
+    background: beige!important;
 }
 select[name] {
     display: none;
 }
-#containingTable{
+#containingTable {
     display: none;
 }
-#mainBody{
+
+#mainBody {
     height: 60vh;
     margin-bottom: 25rem;
 }
-#brandLogo{
+
+#brandLogo {
     border-radius: 55%;
     margin: auto 0;
 }
-#footer{
+
+#footer {
     border-top: 1px solid #000;
-    padding-top: 1rem;   
+    padding-top: 1rem;
     row-gap: 1rem;
 }
-#extraData{
+
+#extraData {
     margin: 1rem 0;
     text-align: center;
     font-weight: bold;
     font-size: 1.5rem;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+#radioButtons {
+    border-bottom: 1px solid #000;
+    padding-bottom: 1rem;
+}
+nav a:hover{
+    font-weight: bold;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
 }

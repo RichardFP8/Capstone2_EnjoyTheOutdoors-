@@ -11,14 +11,14 @@
 </head>
 
 <body>
-    <header>
+    <header class="container-fluid bg-dark p-2">
         <nav class="nav nav-pills nav-fill w-50 mx-auto flex-column flex-sm-row">
-            <a class="nav-link text-dark" href="home.html">Home</a>
-            <a class="nav-link text-dark" href="nationalparks.html">National Parks</a>
+            <a class="nav-link text-light" href="home.html">Home</a>
+            <a class="nav-link text-light" href="nationalparks.html">National Parks</a>
             <a class="nav-link active" aria-current="page" href="#">Mountains</a>
         </nav>
 
-        <div aria-label="breadcrumb" class="d-flex justify-content-center mt-4">
+        <div aria-label="breadcrumb" class="d-block w-75 mx-auto mt-4">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item "><a href="home.html">Home</a></li>
                 <li class="breadcrumb-item active text-light" aria-current="page">Mountains</li>
@@ -28,12 +28,16 @@
     </header>
     <main id="mainBody" class="container">
         <div class="row">
-            <div class="col">
+            <div class="row">
                 <h1 class="display-1 m-3">Mountains</h1>
-                <h2 class="display-6 text-center">48 different kinds, choose any</h2>
-                <select name="mountainList" id="listOfMountains" class="form-control w-50 mx-auto">
-                    <option value="" disabled selected>Select from 48!</option>
-                </select>
+                <div class="col-12  col-md-2">
+                    <label for="listOfMountains" class="form-label">Choose any:</label>
+                </div>
+                <div class="col col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+                    <select name="mountainList" id="listOfMountains" class="form-control w-75">
+                        <option value="" disabled selected>Pick any and watch the magic unfold!</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div id="parentRow" class="row">

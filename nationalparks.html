@@ -11,13 +11,13 @@
 </head>
 
 <body>
-    <header>
+    <header class="container-fluid bg-dark py-1">
         <nav class="nav nav-pills nav-fill w-50 mx-auto flex-column flex-sm-row mb-4">
-            <a class="nav-link text-dark" href="home.html">Home</a>
+            <a class="nav-link text-light" href="home.html">Home</a>
             <a class="nav-link active" aria-current="page" href="test.html">National Parks</a>
-            <a class="nav-link text-dark" href="mountainInfo.html">Mountains</a>
+            <a class="nav-link text-light" href="mountainInfo.html">Mountains</a>
         </nav>
-        <div aria-label="breadcrumb" class="d-flex justify-content-center">
+        <div aria-label="breadcrumb" class="d-block w-75 mx-auto">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="home.html">Home</a></li>
                 <li class="breadcrumb-item active text-light" aria-current="page">National Parks</li>
@@ -26,9 +26,8 @@
 
     </header>
     <main id="mainBody" class="container">
-        <h1 class="display-1 text-center">National Parks in the US</h1>
-        <h2 class="display-4 text-center text-primary">Find parks</h2>
-        <div class="row">
+        <h1 class="display-4 text-center  mt-3 mb-5">Find National Parks in the US</h1>
+        <div id="radioButtons" class="row">
             <div class=" col-lg-3"></div>
             <div class="col">
                 <div class="form-check">

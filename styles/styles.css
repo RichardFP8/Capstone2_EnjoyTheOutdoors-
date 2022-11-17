@@ -1,9 +1,7 @@
 body{
-    background: linear-gradient(90deg, rgba(123, 224, 32, 50%), rgba(34,  57, 89, 0.86));
+    background: beige!important;
 }
-#homePage{
-    color: #fff;
-}
+
 div.carousel-caption {
     color: #fff!important;
 }
@@ -16,9 +14,7 @@ div.carousel-caption {
     border-top: 1px solid #000;
     padding-top: 1rem;
     margin: 1rem 0;
-    row-gap: 1rem;
-    color: #fff;
-    
+    row-gap: 1rem;  
 }
 ul, ol{
     list-style: none;
@@ -30,4 +26,8 @@ ul, ol{
 i{
     font-size: 10px;
     margin-left: 1rem;
+}
+nav a:hover{
+    font-weight: bold;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
 }

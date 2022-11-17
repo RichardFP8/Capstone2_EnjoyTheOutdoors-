@@ -33,9 +33,11 @@ function displayLocationsDropdown() {
     const parkTypeDropdown = document.getElementById("searchParkType");
     const parentContainingAccordion = document.getElementById("showAllParks");
     const deletePreviousParentAccordion = document.querySelector("#showAllParks div");
-
     const extraData = document.getElementById("extraData");
     extraData.innerHTML = "";
+    extraData.style.borderTop = "0";
+    extraData.style.margin = "0";
+    extraData.style.paddingTop = "0";
 
     // locationDropdown.onchange = displayParksByLocation;
     locationDropdown.onchange = displayAllParksByLocation;
@@ -55,6 +57,9 @@ function displayParkTypesDropdown() {
     const deletePreviousParentAccordion = document.querySelector("#showAllParks div");
     const extraData = document.getElementById("extraData");
     extraData.innerHTML = "";
+    extraData.style.borderTop = "0";
+    extraData.style.margin = "0";
+    extraData.style.paddingTop = "0";
 
     parkTypeDropdown.onchange = displayAllParksByParkType;
     parkTypeDropdown.selectedIndex = 0;
@@ -77,7 +82,10 @@ function displayAllParksByLocation() {
     if (deletePreviousParentAccordion !== null) {
         parentContainingAccordion.removeChild(deletePreviousParentAccordion);
     }
-
+    //adding a border under the dropdown for more styling
+    extraData.style.borderTop = "1px solid rgba(127, 127, 127, 0.6)";
+    extraData.style.margin = "2em 0 1em 0";
+    extraData.style.paddingTop = "2rem";
     //only one parent is needed
     const parentAccordion = document.createElement("div");
     parentAccordion.className = "accordion w-75 mx-auto";
@@ -187,6 +195,9 @@ function displayAllParksByParkType() {
     let splitSelectedValue = selectedValue.split(" ");             //I converted the selected value into an array
     let headingNum = 0;
     let totalParks = 0;
+    extraData.style.borderTop = "1px solid rgba(127, 127, 127, 0.6)";
+    extraData.style.margin = "2em 0 1em 0";
+    extraData.style.paddingTop = "2rem";
 
     //starting from the second time the dropdown is changed, there will already be an accordion so I need to remove it before the next one appears
     if (deletePreviousParentAccordion !== null) {
@@ -316,6 +327,10 @@ function showAllParks() {
     const extraData = document.getElementById("extraData");
     const beforeCompute = new Date();
     let headingNum = 0;
+
+    extraData.style.borderTop = "0";
+    extraData.style.marginBottom = "1.5em";
+    extraData.style.paddingTop = "1rem";
 
     parkTypeDropdown.selectedIndex = 0;
     locationDropdown.selectedIndex = 0;
