@@ -42,3 +42,13 @@
 2. 11/17/2022: [National Parks Page](nationalparks.html)  
     **Previously** a table would display once an option is clicked. Each park would show up per row, and it's details were placed in each column, that row  
     **Now** I used the accordion component. Each park is now an accordion item and there is more _**CLICKING for the user!**_. You think they're tired of too much clicking? Anyways, I also added a bit of extra information(_inspiration from Google_) that justs tells how long it took the computer to find all. I added a responsive table inside each accordion items. The name property is the heading of that accordion item
+3. [National Parks Page](nationalparks.html) - Park Type Search  
+    I think I mentioned that I was confused about what parks to include in the park type search. 
+    **Previously** I included any park that contained _any_ of the words from the selected options (because there are 4 options that are 2 words):
+    * National Parks
+    * National Monuments
+    * Recreational Area
+    * Scenic Trail  
+
+    Any park that included any of those two words would be displayed
+    **Now** I changed it with 4 lines of code, two more if conditionals, 1 new variable and the infamous **break**. Basically, if the selected option is two words test the variable, if it passes -> increment it, break and run again for the second word. Basically, don't create the accordion unless the park type is just one word. Test the second word to make sure that **BOTH** words are included. Now that I think of, I'm pretty sure this is what they meant... _the more you know_

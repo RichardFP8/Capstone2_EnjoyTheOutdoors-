@@ -4,9 +4,6 @@ window.onload = init;
 const justEntireAddresses = nationalParksArray.map((park) => {
     return `(${(park.LocationID).toUpperCase()}) - ${park.Address}, ${park.City}, ${park.State} ${park.ZipCode}`;
 });
-// const justCoordinates = nationalParksArray.map( (park) => {
-//     return park["Longitude"] + "° N, " + park["Latitude"] + "° W";
-// } );
 function init() {
     loadDropdowns();
     const locationButton = document.getElementById("locationSearch");
@@ -83,7 +80,7 @@ function displayAllParksByLocation() {
 
     //only one parent is needed
     const parentAccordion = document.createElement("div");
-    parentAccordion.classList.add("accordion");
+    parentAccordion.className = "accordion w-75 mx-auto";
     parentAccordion.id = "containingAllAccordionItems";
     parentContainingAccordion.appendChild(parentAccordion);
 
@@ -198,7 +195,7 @@ function displayAllParksByParkType() {
 
     //only one parent is needed
     const parentAccordion = document.createElement("div");
-    parentAccordion.classList.add("accordion");
+    parentAccordion.className = "accordion w-75 mx-auto";
     parentAccordion.id = "containingAllAccordionItems";
     parentContainingAccordion.appendChild(parentAccordion);
 
@@ -207,10 +204,19 @@ function displayAllParksByParkType() {
     for (let i in nationalParksArray) {
         let currentPark = nationalParksArray[i];
         let splitParkName = currentPark.LocationName.split(" ");
-         
+         let breakCount = 0;
         for (let x in splitSelectedValue) {
             for (let y in splitParkName) {
                 if (splitSelectedValue[x] === splitParkName[y].toLowerCase()) {
+                    // this is for the selected values that are two words, once one of the words match break and test for the second
+                    // this will help prevent making the accordion, as long as one of the words in the selected value matches
+                    if(splitSelectedValue.length == 2){
+                        if(breakCount == 0){
+                            breakCount++;
+                            break;
+                        }
+                    }
+
                     //create the elements needed
                     const childAccordionItem = document.createElement("div");
                     const accordionHeader = document.createElement("h2");
@@ -298,10 +304,9 @@ function displayAllParksByParkType() {
             }
         }
     }
-
     const afterCompute = new Date();
     const millieSecsComputing = afterCompute.getTime() - beforeCompute.getTime();
-    extraData.innerHTML = totalParks + " parks matched the description!" + " It took " + millieSecsComputing + " millieseconds to find all";
+    extraData.innerHTML = `It took ${millieSecsComputing} millieseconds to find all ${totalParks} that matched the description`;
 }
 function showAllParks() {
     const parkTypeDropdown = document.getElementById("searchParkType");
@@ -323,9 +328,10 @@ function showAllParks() {
 
     //only one parent is needed
     const parentAccordion = document.createElement("div");
-    parentAccordion.classList.add("accordion");
+    parentAccordion.className = "accordion w-75 mx-auto";
     parentAccordion.id = "containingAllAccordionItems";
     parentContainingAccordion.appendChild(parentAccordion);
+   
 
     for (let i in nationalParksArray) {
         let currentPark = nationalParksArray[i];
@@ -402,7 +408,6 @@ function showAllParks() {
                 let row = innerTable.insertRow(-1);
                 let cellLabel = row.insertCell(0);
                 let cellData = row.insertCell(1);
-
                 let link = document.createElement("a");
                 link.innerHTML = currentPark.Visit;
                 link.target = "_blank";
