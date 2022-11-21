@@ -1,5 +1,6 @@
 "use strict";
 window.onload = initial;
+
 function initial() {
     // create options
     loadMountains();
@@ -7,7 +8,6 @@ function initial() {
     const mountainDropdown = document.getElementById("listOfMountains");
     mountainDropdown.onchange = displaySelectedMountainDetails;
 }
-// load options
 function loadMountains() {
     const mountainDropdown = document.getElementById("listOfMountains");
     const sortedArray = mountainsArray.sort((x, y) => {

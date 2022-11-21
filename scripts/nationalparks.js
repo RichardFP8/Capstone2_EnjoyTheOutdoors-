@@ -320,12 +320,12 @@ function displayAllParksByParkType() {
     extraData.innerHTML = `It took ${millieSecsComputing} millieseconds to find all ${totalParks} that matched the description`;
 }
 function showAllParks() {
+    const beforeCompute = new Date();
     const parkTypeDropdown = document.getElementById("searchParkType");
     const locationDropdown = document.getElementById("searchLocation");
     const parentContainingAccordion = document.getElementById("showAllParks");
     const deletePreviousParentAccordion = document.querySelector("#showAllParks div");
-    const extraData = document.getElementById("extraData");
-    const beforeCompute = new Date();
+    const extraData = document.getElementById("extraData"); 
     let headingNum = 0;
 
     extraData.style.borderTop = "0";
