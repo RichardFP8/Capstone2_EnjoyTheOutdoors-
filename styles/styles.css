@@ -11,10 +11,10 @@ div.carousel-caption {
     margin: auto 0;
 }
 #footer{
-    border-top: 1px solid #000;
     padding-top: 1rem;
     margin: 1rem 0;
     row-gap: 1rem;  
+    
 }
 ul, ol{
     list-style: none;

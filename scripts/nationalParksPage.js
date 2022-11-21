@@ -72,7 +72,7 @@ function displayAllParksByLocation() {
         let currentPark = nationalParksArray[i];
         if (currentPark["State"].toLowerCase() === valuesArray[1].value) {
             wholeState = currentPark["State"];
-            createAccordionItems(nationalParksArray[i], parentAccordion, 0, i);
+            createAccordionItems(nationalParksArray[i], parentAccordion, i);
             totalParks++;
         }
     }
@@ -99,13 +99,11 @@ function displayAllParksByParkType() {
                 if (splitSelectedValue[x] === splitParkName[y].toLowerCase()) {
                     // this is for the selected values that are two words, once one of the words match break and test for the second
                     // this will help prevent making the accordion, as long as one of the words in the selected value matches
-                    if (splitSelectedValue.length == 2) {
-                        if (breakCount == 0) {
+                    if ( (splitSelectedValue.length == 2) && (breakCount == 0) ) {
                             breakCount++;
-                            break;
-                        }
+                            break;     
                     }
-                    createAccordionItems(nationalParksArray[i], parentAccordion, 0, i);
+                    createAccordionItems(nationalParksArray[i], parentAccordion, i);
                     totalParks++;
                     break;
                 }
@@ -133,7 +131,7 @@ function showAllParks() {
     const parentAccordion = createParentAccordion(valuesArray[2]);
 
     for (let i in nationalParksArray) {
-        createAccordionItems(nationalParksArray[i], parentAccordion, 0, i);
+        createAccordionItems(nationalParksArray[i], parentAccordion, i);
     }
     const afterCompute = new Date();
     const millieSecsComputing = afterCompute.getTime() - beforeCompute.getTime();
@@ -167,8 +165,7 @@ function setStylesToExtraDataParagraph(para) {
     para.style.margin = "2em 0 1em 0";
     para.style.paddingTop = "2rem";
 }
-
-function createAccordionItems(currentPark, parentAccordion, headingNum, nationalParksArrayIndex) {
+function createAccordionItems(currentPark, parentAccordion, nationalParksArrayIndex) {
 
     //create the elements needed
     const childAccordionItem = document.createElement("div");
@@ -181,7 +178,7 @@ function createAccordionItems(currentPark, parentAccordion, headingNum, national
     //add the classes and the other attributes needed
     childAccordionItem.classList.add("accordion-item");
     accordionHeader.classList.add("accordion-header");
-    accordionHeader.id = "heading" + headingNum;
+    accordionHeader.id = "heading" + currentPark["LocationID"];
     accordionBody.className = "accordion-body table-responsive";
     innerTable.classList.add("table");
 
@@ -195,7 +192,7 @@ function createAccordionItems(currentPark, parentAccordion, headingNum, national
 
     collapseInfo.id = currentPark["LocationID"];
     collapseInfo.className = "accordion-collapse collapse";
-    collapseInfo.setAttribute("aria-labelledby", "heading" + headingNum);
+    collapseInfo.setAttribute("aria-labelledby", "heading" + currentPark["LocationID"]);
     collapseInfo.setAttribute("data-bs-parent", "#containingAllAccordionItems");
 
     //now, append the children(what?)   
@@ -208,7 +205,7 @@ function createAccordionItems(currentPark, parentAccordion, headingNum, national
 
     //create a few rows for the parks that match the selected option 
     addInnerRows(currentPark, nationalParksArrayIndex, innerTable, ["Phone", "Fax"], 0, 0);
-    return headingNum++;
+    
 }
 function addInnerRows(currentPark, nationalParksArrayIndex, innerTable, remainingProperties, remainingPropertiesIndex, tableRowIndex) {
 
