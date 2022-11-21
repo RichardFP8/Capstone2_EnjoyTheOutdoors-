@@ -11,10 +11,10 @@ function initial() {
 function loadMountains() {
     const mountainDropdown = document.getElementById("listOfMountains");
     const sortedArray = mountainsArray.sort((x, y) => {
-        if( x.name < y.name) return -1;
-        else if(x.name === y.name) return 0;
+        if (x.name < y.name) return -1;
+        else if (x.name === y.name) return 0;
         else return 1;
-    } );
+    });
     for (let i in sortedArray) {
         let createOption = new Option(sortedArray[i].name, sortedArray[i].name.toLowerCase());
         mountainDropdown.appendChild(createOption);
@@ -32,6 +32,11 @@ function displaySelectedMountainDetails() {
     if (deleteCard !== null) {
         parentRow.removeChild(deleteCard);
     }
+    displayTheMountainCard(parentRow, childColumn, selectedValue);
+
+}
+//this function creates the card component and calls the next function
+function displayTheMountainCard(parentRow, childColumn, selectedValue) {
     //create the elements required for the card component
     const cardComponent = document.createElement("div");
     const mountainImage = document.createElement("img");
@@ -57,7 +62,11 @@ function displaySelectedMountainDetails() {
     cardComponent.appendChild(mountainImage);
     cardComponent.appendChild(cardBody);
     parentRow.insertBefore(cardComponent, childColumn);
-    //go through each mountain object
+
+    addContentToTheCard(cardTitle, cardTable, cardText, mountainImage, selectedValue);
+}
+//this is the "next function" I referenced earlier; this is where the content is added to the card component
+function addContentToTheCard(cardTitle, cardTable, cardText, mountainImage, selectedValue) {
     for (let i in mountainsArray) {
         let current = mountainsArray[i];
         //compare each of name properties with the selected value 
@@ -99,14 +108,13 @@ function displaySelectedMountainDetails() {
                     let sunriseCellLabel = sunriseRow.insertCell(0);
                     let sunriseCellData = sunriseRow.insertCell(1);
                     sunriseCellLabel.innerHTML = "Sunrise";
-                    getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunriseCellData.innerHTML = data.results.sunrise + "UTC");
+                    getSunsetForMountain(current["coords"].lat, current["coords"].lng).then(data => sunriseCellData.innerHTML = data.results.sunrise + "UTC");
                     //for sunset
                     let sunsetRow = cardTable.insertRow(-1);
                     let sunsetCellLabel = sunsetRow.insertCell(0);
                     let sunsetCellData = sunsetRow.insertCell(1);
                     sunsetCellLabel.innerHTML = "Sunset";
-                    getSunsetForMountain(mountainsArray[i]["coords"].lat, mountainsArray[i]["coords"].lng).then(data => sunsetCellData.innerHTML = data.results.sunset + "UTC");
-
+                    getSunsetForMountain(current["coords"].lat, current["coords"].lng).then(data => sunsetCellData.innerHTML = data.results.sunset + "UTC");
                 }
                 else if (property === "img") {
                     mountainImage.src = "./images/" + current["img"];
