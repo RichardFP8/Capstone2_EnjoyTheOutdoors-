@@ -35,6 +35,9 @@
     * How to make insert data-bs-toggle/target attributes to the programmatically created elements
     *  How to layout the details of the park inside that accordion item
     * How to shorten the amount of steps to add the details inside the accordion items(_now that I think of it, I haven't solved this one..._)
+5. [Mountains Information Page](mountainsinfo.html) - Sunset/sunrise times(oh boy)  
+    11/21/22 I tried to move the code already in the onchange event into seperate functions. That didn't work out well because the fetch method seemed to stop working properly. It gave me a **failed to fetch** and a **type error**.   
+    **What did I do** I was changing the arguments that the fetch method needed, printing them in the dev console but nothing worked. 11/22/22 I checked the website and it started working again... is this a lesson? an experience that'll keep happening? is this the reality of programming?   
 ### UPDATES _(any changes)_
 1. 11/15/2022: [Mountains Information Page](mountainsinfo.html)  
     **Previously** a table would render once the user clicked an option and the image would appear at the bottom of that table  
@@ -51,4 +54,6 @@
     * Scenic Trail  
 
     Any park that included any of those two words would be displayed
-    **Now** I changed it with 4 lines of code, two more if conditionals, 1 new variable and the infamous **break**. Basically, if the selected option is two words test the variable, if it passes -> increment it, break and run again for the second word. Basically, don't create the accordion unless the park type is just one word. Test the second word to make sure that **BOTH** words are included. Now that I think of, I'm pretty sure this is what they meant... _the more you know_
+    **Now** I changed it with 4 lines of code, two more if conditionals, 1 new variable and the infamous **break**. Basically, if the selected option is two words test the variable, if it passes -> increment it, break and run again for the second word. Basically, don't create the accordion unless the park type is just one word. Test the second word to make sure that **BOTH** words are included. Now that I think of, I'm pretty sure this is what they meant... _the more you know_  
+4. [National Parks Page](nationalparks.html) - Moving code to functions   
+    I moved code that was repeated in the onchange functions to there own. That was that... It was a bit difficult because now I had to understand what the function needs(parameters) for it to work and if a separate function needs to be nested inside another seperate function. **To be clear, when I say _separate function_ I mean the functions that aren't the onchange event, the ones that have the repeated steps**. It was difficult to spot bugs when the dev console didn't tell me there were any and I think I made my code a bit less readable(? if that makes sense). By that I mean that I have a function that accesses the HTML elements I need and I use an array to get those elements from that function. Obviously with comments that could be fix, but I want code that's understandable to humans as much as possible. 
