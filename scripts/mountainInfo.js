@@ -99,14 +99,14 @@ function displaySelectedMountainDetails() {
                     let sunriseCellLabel = sunriseRow.insertCell(0);
                     let sunriseCellData = sunriseRow.insertCell(1);
                     sunriseCellLabel.innerHTML = "Sunrise";
-                    getSunsetForMountain(current["coords"]["lat"], current["coords"]["lng"]).then(data => console.log(data.results.sunrise));
+                    getSunsetForMountain(current["coords"].lat, current["coords"].lng).then(data => sunriseCellData.innerHTML = data.results.sunrise);
                     
                     //for sunset
                     let sunsetRow = cardTable.insertRow(-1);
                     let sunsetCellLabel = sunsetRow.insertCell(0);
                     let sunsetCellData = sunsetRow.insertCell(1);
                     sunsetCellLabel.innerHTML = "Sunset";
-                    getSunsetForMountain(current["coords"].lat, current["coords"]["lng"]).then(data => sunsetCellData.innerHTML = data.results.sunset + "UTC");
+                    getSunsetForMountain(current["coords"].lat, current["coords"].lng).then(data => sunsetCellData.innerHTML = data.results.sunset + "UTC");
                 }
                 else if (property === "img") {
                     mountainImage.src = "./images/" + current["img"];
