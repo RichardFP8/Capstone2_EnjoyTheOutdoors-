@@ -29,12 +29,14 @@ function loadDropdowns() {
     }
 }
 function displayLocationsDropdown() {
-    let valuesArray = getAllValues();
+    let valuesArray = getAllHTMLElementsRequired();
+    //[4] - this is the style for the <p> that will display additional data
     valuesArray[4].innerHTML = "";
     valuesArray[4].style.borderTop = "0";
     valuesArray[4].style.margin = "0";
     valuesArray[4].style.paddingTop = "0";
 
+    //[0] - is the park type dropdown, [1] is the location dropdown; hide one and display the other with "Select..." as the first option
     valuesArray[1].onchange = displayAllParksByLocation;
     valuesArray[1].style.display = "block";
     valuesArray[0].style.display = "none";
@@ -42,13 +44,14 @@ function displayLocationsDropdown() {
     deletePreviousParentAccordion(valuesArray[2], valuesArray[3]);
 }
 function displayParkTypesDropdown() {
-    //accessing all elements in a function and returning that to use less lines 
-    let valuesArray = getAllValues();
+    //[4] - this is the style for the <p> that will display additional data
+    let valuesArray = getAllHTMLElementsRequired();
     valuesArray[4].innerHTML = "";
     valuesArray[4].style.borderTop = "0";
     valuesArray[4].style.margin = "0";
     valuesArray[4].style.paddingTop = "0";
 
+    //[0] - is the park type dropdown, [1] is the location dropdown; hide one and display the other with "Select..." as the first option
     valuesArray[0].onchange = displayAllParksByParkType;
     valuesArray[0].selectedIndex = 0;
     valuesArray[0].style.display = "block";
@@ -58,12 +61,13 @@ function displayParkTypesDropdown() {
 function displayAllParksByLocation() {
     //accessing all elements in a function and returning that to use less lines 
     const beforeCompute = new Date();
-    let valuesArray = getAllValues();
+    let valuesArray = getAllHTMLElementsRequired();
     let totalParks = 0;
     let wholeState;
 
-    //adding a border under the dropdown for more styling
+    //[4] - this is the style for the <p> that will display additional data
     setStylesToExtraDataParagraph(valuesArray[4]);
+
     deletePreviousParentAccordion(valuesArray[2], valuesArray[3]);
     const parentAccordion = createParentAccordion(valuesArray[2]);
 
@@ -82,11 +86,12 @@ function displayAllParksByLocation() {
 }
 function displayAllParksByParkType() {
     const beforeCompute = new Date();
-    let valuesArray = getAllValues();
+    let valuesArray = getAllHTMLElementsRequired();
     let splitSelectedValue = valuesArray[0].value.split(" ");             //I converted the selected value into an array
     let totalParks = 0;
-
+    //[4] - this is the style for the <p> that will display additional data
     setStylesToExtraDataParagraph(valuesArray[4]);
+
     deletePreviousParentAccordion(valuesArray[2], valuesArray[3]);
     const parentAccordion = createParentAccordion(valuesArray[2]);
 
@@ -115,18 +120,20 @@ function displayAllParksByParkType() {
     valuesArray[4].innerHTML = `It took ${millieSecsComputing} millieseconds to find all ${totalParks} that matched the description`;
 }
 function showAllParks() {
-    let valuesArray = getAllValues();
+    let valuesArray = getAllHTMLElementsRequired();
     const beforeCompute = new Date();
 
+    //[4] - this is the style for the <p> that will display additional data
     valuesArray[4].style.borderTop = "0";
     valuesArray[4].style.marginBottom = "1.5em";
     valuesArray[4].style.paddingTop = "1rem";
 
+    //[0] - is the park type dropdown, [1] is the location dropdown; hide one and display the other with "Select..." as the first option
     valuesArray[0].selectedIndex = 0;
     valuesArray[1].selectedIndex = 0;
     valuesArray[0].style.display = "none";
     valuesArray[1].style.display = "none";
-
+    //[2] - is the div that contains 
     deletePreviousParentAccordion(valuesArray[2], valuesArray[3]);
     const parentAccordion = createParentAccordion(valuesArray[2]);
 
@@ -139,8 +146,7 @@ function showAllParks() {
 }
 
 //these functions are used repeatedly
-
-function getAllValues() {
+function getAllHTMLElementsRequired() {
     const parkTypeDropdown = document.getElementById("searchParkType"),
         locationDropdown = document.getElementById("searchLocation"),
         accordionContainer = document.getElementById("showAllParks"),
